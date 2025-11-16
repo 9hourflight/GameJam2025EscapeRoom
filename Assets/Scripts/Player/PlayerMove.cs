@@ -5,6 +5,7 @@ public class PlayerMove : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 7f;
     private float speedMultiplier = 10f;
+    private int god = 0;
 
     [Header("Ground Check")]
     [SerializeField] private float playerHeight = 2f;
