@@ -2,61 +2,77 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] private Transform player;
-    [SerializeField] private Vector3 movement;
-    [SerializeField] private float moveSpeed = 6f;
-    [SerializeField] private float mouseSensitivity = 2f;
-    [SerializeField] private float cameraVerticalRotation = 0f;
-    [SerializeField] private const string moveHorizontal = "Horizontal";
-    [SerializeField] private const string moveVertical = "Vertical";
-    [SerializeField] private const string mouseAxisX = "Mouse X";
-    [SerializeField] private const string mouseAxisY = "Mouse Y";
-    
-    // This is for when the player is interacting with a puzzle.
-    // If it is locked, the player can rotate and move around the world.
-    // If it is not locked, do not let the player rotate or move the player.
-    // Since they interacting with a puzzle and need the mouse.
-    [SerializeField] private bool isCursorLocked = true;
+    [Header("Movement")]
+    [SerializeField] private float moveSpeed = 7f;
+    private float speedMultiplier = 10f;
 
+    [Header("Ground Check")]
+    [SerializeField] private float playerHeight = 2f;
+    [SerializeField] private float groundDrag = 10f;
+    [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private bool isGrounded = true;
+
+    [SerializeField] private Transform player;
+    private float horizontalInput;
+    private float verticalInput;
+    private const string movementX = "Horizontal";
+    private const string movementY = "Vertical";
+    Vector3 movementDirection;
+    private Rigidbody playerRB;
 
     private void Start()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        playerRB = GetComponent<Rigidbody>();
+        playerRB.freezeRotation = true;
     }
 
-    void Update()
+    private void Update()
     {
-        Move();
-        Rotation();
-    }
+        //This will check if the player is on the ground to ensure there is drag to the player
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
-    private void Move()
-    {
-        if(isCursorLocked)
+        MovementInput();
+        SpeedControl();
+
+        //Handling drag of player if they are on ground (they should never leave the ground but just in case)
+        if(isGrounded)
         {
-            float horizontal = Input.GetAxisRaw(moveHorizontal);
-            float vertical = Input.GetAxisRaw(moveVertical);
-            movement.Set(horizontal, 0f, vertical);
-            movement = movement.normalized * moveSpeed * Time.deltaTime;
-            transform.Translate(movement * moveSpeed * Time.deltaTime);
+            playerRB.linearDamping = groundDrag;
+        }
+        else
+        {
+            playerRB.linearDamping = 0;
         }
     }
 
-    private void Rotation()
+    private void FixedUpdate()
     {
-        if(isCursorLocked)
+        MovePlayer();
+    }
+
+    private void MovementInput()
+    {
+        horizontalInput = Input.GetAxis(movementX);
+        verticalInput = Input.GetAxis(movementY);
+    }
+
+    private void MovePlayer()
+    {
+        movementDirection = player.forward * verticalInput + player.right * horizontalInput;
+        playerRB.AddForce(movementDirection.normalized * moveSpeed * speedMultiplier, ForceMode.Force);
+    }
+
+    /// <summary>
+    /// Limits the players movement by what the variable is set to
+    /// </summary>
+    private void SpeedControl()
+    {
+        Vector3 flatVelocity = new Vector3(playerRB.linearVelocity.x, 0f, playerRB.linearVelocity.z);
+        //Limit the velocity of player
+        if(flatVelocity.magnitude > moveSpeed)
         {
-            float inputX = Input.GetAxis(mouseAxisX) * mouseSensitivity;
-            float inputY = Input.GetAxis(mouseAxisY) * mouseSensitivity;
-
-            // To rotate the camera up and down
-            cameraVerticalRotation -= inputY;
-            cameraVerticalRotation = Mathf.Clamp(cameraVerticalRotation, -90f, 90f);
-            transform.localEulerAngles = Vector3.right * cameraVerticalRotation;
-
-            // To rotate the camera left and right
-            player.Rotate(Vector3.up * inputX);
+            Vector3 limitedVelocity = flatVelocity.normalized * moveSpeed;
+            playerRB.linearVelocity = new Vector3(limitedVelocity.x, playerRB.linearVelocity.y, limitedVelocity.z);
         }
     }
 }
