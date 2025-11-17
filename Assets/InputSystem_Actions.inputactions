@@ -991,34 +991,6 @@
                     "isPartOfComposite": false
                 }
             ]
-        },
-        {
-            "name": "Interacting",
-            "id": "18c531fd-f3c8-48e3-9a88-5e57a56acd40",
-            "actions": [
-                {
-                    "name": "Interact",
-                    "type": "Button",
-                    "id": "f2de721f-08ca-4324-9525-38fd929eef82",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "17830edc-08f5-4775-8b3b-66dcd1421fe2",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
         }
     ],
     "controlSchemes": [
