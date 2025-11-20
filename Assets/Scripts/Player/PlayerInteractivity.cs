@@ -1,33 +1,65 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using System.Collections;
+using System.Collections.Generic;
+using System;
+
 
 public class PlayerInteractivity : MonoBehaviour
 {
-    [SerializeField] private bool isInteractable = false;
-    public GameObject interactButton;
+    public GameObject InteractText;
+    public GameObject ExitPuzzleText;
+    public static bool IsInteracting;
+    public float playerReach = 3f; //The distance of which the player can interact with an object
+
+    [SerializeField] GameObject puzzleCamera;
+    [SerializeField] GameObject player;
+
+    private Interactable currentInteractable;
 
     private void Awake()
     {
-        interactButton.SetActive(false);
+        InteractText.SetActive(false);
+        ExitPuzzleText.SetActive(false);
+        puzzleCamera.SetActive(false);
     }
 
-    private void Update()
+    public void Update()
     {
-        if (isInteractable && Input.GetKeyDown(KeyCode.E))
+        if(Input.GetKeyDown(KeyCode.F) && currentInteractable != null)
         {
-            Debug.Log("E has been pressed.");
+
         }
+
+
+        /*if(IsInteracting && Input.GetKeyDown(KeyCode.E))
+        {
+            ExitPuzzleText.SetActive(true);
+            puzzleCamera.SetActive(true);
+            player.SetActive(false);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            ExitPuzzleText.SetActive(false);
+            puzzleCamera.SetActive(false);
+            player.SetActive(true);
+        }*/
     }
 
+    private void InteractWithPuzzle()
+    {
+        
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
-        isInteractable = true;
-        interactButton.SetActive(true);
+        IsInteracting = true;
+        InteractText.SetActive(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        isInteractable = false;
-        interactButton.SetActive(false);
+        IsInteracting = false;
+        InteractText.SetActive(false);
     }
 }
