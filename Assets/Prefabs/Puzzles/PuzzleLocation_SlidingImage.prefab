@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4353617083491773954}
+  - component: {fileID: 7579055852507442474}
   m_Layer: 0
   m_Name: PuzzleLocation_SlidingImage
   m_TagString: Untagged
@@ -31,3 +32,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7579055852507442474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7096157756240023753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8487d579b4bacc4a828922701f0915e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SlidingImageManager
+  gameTransform: {fileID: 4353617083491773954}
+  piecePrefab: {fileID: 507988423865214197, guid: a357f3260f9a1ff4fba8c6c133cadd9d, type: 3}

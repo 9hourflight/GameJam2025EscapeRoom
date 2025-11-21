@@ -6,60 +6,117 @@ using System;
 
 public class PlayerInteractivity : MonoBehaviour
 {
-    public GameObject InteractText;
     public GameObject ExitPuzzleText;
     public static bool IsInteracting;
     public float playerReach = 3f; //The distance of which the player can interact with an object
 
-    [SerializeField] GameObject puzzleCamera;
-    [SerializeField] GameObject player;
+    [SerializeField] private GameObject puzzleCamera;
+    [SerializeField] private GameObject interactText;
+    [SerializeField] private GameObject player;
 
     private Interactable currentInteractable;
 
     private void Awake()
     {
-        InteractText.SetActive(false);
+        //HudManager.Instance.DisableInteractionText();
+        interactText.SetActive(false);
         ExitPuzzleText.SetActive(false);
         puzzleCamera.SetActive(false);
     }
 
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F) && currentInteractable != null)
+        if(Input.GetKeyDown(KeyCode.E) && currentInteractable != null)
         {
-
+            currentInteractable.Interact();
         }
+        //CheckInteraction();
 
-
-        /*if(IsInteracting && Input.GetKeyDown(KeyCode.E))
+        if(Input.GetKeyDown(KeyCode.E) && IsInteracting)
         {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            interactText.SetActive(false);
             ExitPuzzleText.SetActive(true);
             puzzleCamera.SetActive(true);
             player.SetActive(false);
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             ExitPuzzleText.SetActive(false);
             puzzleCamera.SetActive(false);
             player.SetActive(true);
-        }*/
+        }
     }
 
-    private void InteractWithPuzzle()
+    private void CheckInteraction()
     {
-        
+        RaycastHit hit;
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        if(Physics.Raycast(ray, out hit, playerReach))
+        {
+            if(hit.collider.tag == "Interactable")
+            {
+                Interactable newInteractable = hit.collider.GetComponent<Interactable>();
+                if(currentInteractable && newInteractable != currentInteractable)
+                {
+                    currentInteractable.DisableOutline();
+                }
+
+                if(newInteractable.enabled)
+                {
+                    SetNewCurrentInteractable(newInteractable);
+                }
+                else
+                {
+                    DisableCurrentInteractable();
+                }
+            }
+            else
+            {
+                DisableCurrentInteractable();
+            }
+        }
+        else
+        {
+            DisableCurrentInteractable();
+        }
     }
-    
+
+    private void SetNewCurrentInteractable(Interactable newInteractable)
+    {
+        currentInteractable = newInteractable;
+        currentInteractable.EnableOutline();
+        HudManager.Instance.EnableInteractionText(currentInteractable.message);
+    }
+
+    private void DisableCurrentInteractable()
+    {
+        HudManager.Instance.DisableInteractionText();
+        if(currentInteractable)
+        {
+            currentInteractable.DisableOutline();
+            currentInteractable = null;
+        }
+    }
+
+    public void InteractWithPuzzle()
+    {
+        ExitPuzzleText.SetActive(true);
+        puzzleCamera.SetActive(true);
+        player.SetActive(false);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
+        interactText.SetActive(true);
         IsInteracting = true;
-        InteractText.SetActive(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
+        interactText.SetActive(false);
         IsInteracting = false;
-        InteractText.SetActive(false);
     }
 }
