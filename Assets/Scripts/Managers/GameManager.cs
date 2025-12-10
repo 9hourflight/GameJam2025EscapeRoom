@@ -7,8 +7,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public bool IsPuzzleOver;
+    public bool IsKeyPickedUp;
+    public GameObject KeyToDoor;
 
-    [SerializeField] private GameObject keyToDoor;
     [SerializeField] private Transform keySpawnLocation;
 
     private void Awake()
@@ -26,7 +28,10 @@ public class GameManager : MonoBehaviour
 
     public void PuzzleCompleted()
     {
-        Instantiate(keyToDoor, keySpawnLocation);
+        KeyToDoor = Instantiate(KeyToDoor, keySpawnLocation, keySpawnLocation);
+        IsPuzzleOver = true;
+        PlayerInteractivity.IsInteracting = false;
+        TimerManager.Instance.isTimerStart = false;
         Debug.Log("You completed the puzzle!!");
     }
 }

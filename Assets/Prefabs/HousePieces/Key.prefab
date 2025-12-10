@@ -250,7 +250,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 764
+  m_VersionIndex: 767
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -369,14 +369,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2a99118ae07a044bb24f4200fec97cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableManager
-  message: 'Pickup Key: E'
+  message: 'Pickup Key:'
   onInteraction:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4374752926264604960}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1875842782379883010}
+        m_TargetAssemblyTypeName: Interactable, Assembly-CSharp
+        m_MethodName: OnKeyPickedUp
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

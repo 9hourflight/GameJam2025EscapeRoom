@@ -13,15 +13,15 @@ public class PlayerInteractivity : MonoBehaviour
     [SerializeField] private GameObject puzzleCamera;
     [SerializeField] private GameObject interactText;
     [SerializeField] private GameObject player;
+    [SerializeField] private GameObject timerUI;
 
     private Interactable currentInteractable;
 
     private void Awake()
     {
-        //HudManager.Instance.DisableInteractionText();
-        interactText.SetActive(false);
         ExitPuzzleText.SetActive(false);
         puzzleCamera.SetActive(false);
+        timerUI.SetActive(false);
     }
 
     public void Update()
@@ -30,22 +30,23 @@ public class PlayerInteractivity : MonoBehaviour
         {
             currentInteractable.Interact();
         }
-        //CheckInteraction();
+        CheckInteraction();
 
         if(Input.GetKeyDown(KeyCode.E) && IsInteracting)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            interactText.SetActive(false);
-            ExitPuzzleText.SetActive(true);
-            puzzleCamera.SetActive(true);
-            player.SetActive(false);
+            InteractWithPuzzle();
+            TimerManager.Instance.isTimerStart = true;
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             ExitPuzzleText.SetActive(false);
             puzzleCamera.SetActive(false);
+            timerUI.SetActive(false);
             player.SetActive(true);
         }
     }
@@ -64,7 +65,7 @@ public class PlayerInteractivity : MonoBehaviour
                     currentInteractable.DisableOutline();
                 }
 
-                if(newInteractable.enabled)
+                if(newInteractable.enabled && newInteractable != null)
                 {
                     SetNewCurrentInteractable(newInteractable);
                 }
@@ -103,15 +104,20 @@ public class PlayerInteractivity : MonoBehaviour
 
     public void InteractWithPuzzle()
     {
+        interactText.SetActive(false);
         ExitPuzzleText.SetActive(true);
+        timerUI.SetActive(true);
         puzzleCamera.SetActive(true);
         player.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        interactText.SetActive(true);
-        IsInteracting = true;
+        if(!GameManager.Instance.IsPuzzleOver)
+        {
+            interactText.SetActive(true);
+            IsInteracting = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)

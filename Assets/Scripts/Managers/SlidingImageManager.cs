@@ -73,7 +73,6 @@ public class SlidingImageManager : MonoBehaviour
             }
         }
         OnCompletingPuzzle?.Invoke();
-        PlayerInteractivity.IsInteracting = false;
         return true;
     }
 
