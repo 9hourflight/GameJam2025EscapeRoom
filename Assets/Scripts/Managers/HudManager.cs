@@ -27,7 +27,10 @@ public class HudManager : MonoBehaviour
 
     public void DisableInteractionText()
     {
-        interactText.gameObject.SetActive(false);
-        interactObject.SetActive(false);
+        if (interactText != null)
+        {
+            interactText.gameObject.SetActive(false);
+            interactObject.SetActive(false);
+        }
     }
 }
