@@ -385,6 +385,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  doorPivot: {fileID: 0}
 --- !u!114 &739473444607996713
 MonoBehaviour:
   m_ObjectHideFlags: 0
