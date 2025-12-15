@@ -2,10 +2,12 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Unity.VisualScripting;
 
 
 public class PlayerInteractivity : MonoBehaviour
 {
+    public static PlayerInteractivity Instance;
     public GameObject ExitPuzzleText;
     public static bool IsInteracting;
     public float playerReach = 3f; //The distance of which the player can interact with an object
@@ -14,11 +16,21 @@ public class PlayerInteractivity : MonoBehaviour
     [SerializeField] private GameObject interactText;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject timerUI;
-
+    
     private Interactable currentInteractable;
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         ExitPuzzleText.SetActive(false);
         puzzleCamera.SetActive(false);
         timerUI.SetActive(false);

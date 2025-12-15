@@ -1,9 +1,7 @@
-using UnityEngine;
-using UnityEngine.UI;
 using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class SlidingImageManager : MonoBehaviour
 {
@@ -97,9 +95,9 @@ public class SlidingImageManager : MonoBehaviour
     private void CreateGamePieces(float gapThickness)
     {
         float width = 1 / (float)size;
-        for(int row = 0; row < size; row++)
+        for (int row = 0; row < size; row++)
         {
-            for(int col = 0; col < size; col++)
+            for (int col = 0; col < size; col++)
             {
                 Transform piece = Instantiate(piecePrefab, gameTransform);
                 pieces.Add(piece);
@@ -136,7 +134,7 @@ public class SlidingImageManager : MonoBehaviour
     {
         int count = 0;
         int last = 0;
-        while(count < (size * size * size))
+        while (count < (size * size * size))
         {
             int random = UnityEngine.Random.Range(0, size * size);
             if (random == last)

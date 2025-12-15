@@ -10,8 +10,11 @@ public class GameManager : MonoBehaviour
     public bool IsPuzzleOver;
     public bool IsKeyPickedUp;
     public GameObject KeyToDoor;
+    public static readonly int numRows = 3;
+    public static readonly int numCols = 3;
 
     [SerializeField] private Transform keySpawnLocation;
+    [SerializeField] private LightsOutManager[,] tiles = new LightsOutManager[numRows, numCols];
 
     private void Awake()
     {
