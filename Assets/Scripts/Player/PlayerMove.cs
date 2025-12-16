@@ -65,7 +65,7 @@ public class PlayerMove : MonoBehaviour
     {
         Vector3 flatVelocity = new Vector3(playerRB.linearVelocity.x, 0f, playerRB.linearVelocity.z);
         //Limit the velocity of player
-        if(flatVelocity.magnitude > moveSpeed)
+        if (flatVelocity.magnitude > moveSpeed)
         {
             Vector3 limitedVelocity = flatVelocity.normalized * moveSpeed;
             playerRB.linearVelocity = new Vector3(limitedVelocity.x, playerRB.linearVelocity.y, limitedVelocity.z);

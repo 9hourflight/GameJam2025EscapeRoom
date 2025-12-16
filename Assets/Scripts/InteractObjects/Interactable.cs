@@ -1,9 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 
 public class Interactable : MonoBehaviour
 {
@@ -18,7 +14,7 @@ public class Interactable : MonoBehaviour
     private void Start()
     {
         outline = GetComponent<Outline>();
-        if(doorPivot != null)
+        if (doorPivot != null)
         {
             doorOpening = GetComponentInParent<Animator>();
         }
@@ -38,7 +34,7 @@ public class Interactable : MonoBehaviour
 
     public void OnDoorClicked()
     {
-        if(GameManager.Instance.IsKeyPickedUp)
+        if (GameManager.Instance.IsKeyPickedUp)
         {
             doorOpening.SetTrigger("OpenDoor");
         }

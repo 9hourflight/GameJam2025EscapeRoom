@@ -1,8 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using Unity.VisualScripting;
 
 
 public class PlayerInteractivity : MonoBehaviour
@@ -16,7 +12,7 @@ public class PlayerInteractivity : MonoBehaviour
     [SerializeField] private GameObject interactText;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject timerUI;
-    
+
     private Interactable currentInteractable;
 
     private void Awake()
@@ -38,13 +34,13 @@ public class PlayerInteractivity : MonoBehaviour
 
     public void LateUpdate()
     {
-        if(Input.GetKeyDown(KeyCode.E) && currentInteractable != null)
+        if (Input.GetKeyDown(KeyCode.E) && currentInteractable != null)
         {
             currentInteractable.Interact();
         }
         CheckInteraction();
 
-        if(Input.GetKeyDown(KeyCode.E) && IsInteracting)
+        if (Input.GetKeyDown(KeyCode.E) && IsInteracting)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -67,17 +63,17 @@ public class PlayerInteractivity : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-        if(Physics.Raycast(ray, out hit, playerReach))
+        if (Physics.Raycast(ray, out hit, playerReach))
         {
-            if(hit.collider.tag == "Interactable")
+            if (hit.collider.tag == "Interactable")
             {
                 Interactable newInteractable = hit.collider.GetComponent<Interactable>();
-                if(currentInteractable && newInteractable != currentInteractable)
+                if (currentInteractable && newInteractable != currentInteractable)
                 {
                     currentInteractable.DisableOutline();
                 }
 
-                if(newInteractable.enabled && newInteractable != null)
+                if (newInteractable.enabled && newInteractable != null)
                 {
                     SetNewCurrentInteractable(newInteractable);
                 }
@@ -107,7 +103,7 @@ public class PlayerInteractivity : MonoBehaviour
     private void DisableCurrentInteractable()
     {
         HudManager.Instance.DisableInteractionText();
-        if(currentInteractable)
+        if (currentInteractable)
         {
             currentInteractable.DisableOutline();
             currentInteractable = null;
@@ -125,7 +121,7 @@ public class PlayerInteractivity : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!GameManager.Instance.IsPuzzleOver)
+        if (!GameManager.Instance.IsPuzzleOver)
         {
             interactText.SetActive(true);
             IsInteracting = true;

@@ -1,9 +1,4 @@
-using NUnit.Framework;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +6,7 @@ public class GameManager : MonoBehaviour
     public bool IsPuzzleOver;
     public bool IsKeyPickedUp;
     public GameObject KeyToDoor;
+    public int randomPuzzle;
 
     [SerializeField] private Transform keySpawnLocation;
 
@@ -38,26 +34,29 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        int randomPuzzle = UnityEngine.Random.Range( 1, 2 );
+        int randomPuzzle = Random.Range(1, 2);
 
         if (isPuzzleRigged)
         {
             randomPuzzle = riggedPuzzle;
         }
 
-        if (randomPuzzle == 1)
+        if (puzzleLocation != null)
         {
-            puzzle01 = Instantiate(puzzle01, puzzleLocation, puzzleLocation);
-        }
-        else
-        {
-            puzzle02 = Instantiate(puzzle02, puzzleLocation);
+            if (randomPuzzle == 1)
+            {
+                puzzle01 = Instantiate(puzzle01, puzzleLocation, puzzleLocation);
+            }
+            else
+            {
+                puzzle02 = Instantiate(puzzle02, puzzleLocation);
+            }
         }
     }
 
     public void PuzzleCompleted()
     {
-        KeyToDoor = Instantiate(KeyToDoor, keySpawnLocation, keySpawnLocation);
+        KeyToDoor = Instantiate(KeyToDoor, keySpawnLocation);
         IsPuzzleOver = true;
         PlayerInteractivity.IsInteracting = false;
         TimerManager.Instance.isTimerStart = false;

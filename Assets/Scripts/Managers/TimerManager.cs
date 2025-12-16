@@ -1,5 +1,5 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TimerManager : MonoBehaviour
@@ -11,7 +11,7 @@ public class TimerManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timerTextUI;
     [SerializeField] private string loseScene;
 
-    
+
     private float elapsedTime = 20f;
 
     private void Awake()
@@ -21,7 +21,7 @@ public class TimerManager : MonoBehaviour
 
     private void Update()
     {
-        if(isTimerStart)
+        if (isTimerStart)
         {
             if (elapsedTime >= 0)
             {
