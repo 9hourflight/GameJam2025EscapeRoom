@@ -24,7 +24,7 @@ public class FrontEnd : MonoBehaviour
 
     private void Start()
     {
-        randomPuzzle = Random.Range(1, 2);
+        randomPuzzle = Random.Range(1, 3);
 
         if (isPuzzleRigged)
         {
@@ -43,5 +43,6 @@ public class FrontEnd : MonoBehaviour
         {
             Instantiate(Resources.Load("Canvas/" + "LoadPuzzle2_Canvas") as GameObject);
         }
+        Destroy(gameObject);
     }
 }
