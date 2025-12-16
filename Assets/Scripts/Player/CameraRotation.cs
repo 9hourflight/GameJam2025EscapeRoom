@@ -18,7 +18,7 @@ public class CameraRotation : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         Rotation();
     }

@@ -15,10 +15,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject puzzle01;
     [SerializeField] private GameObject puzzle02;
 
-    [Header("Rigging Puzzle")]
-    [SerializeField] private bool isPuzzleRigged;
-    [SerializeField] private int riggedPuzzle;
-
     private void Awake()
     {
         if (Instance == null)
@@ -34,12 +30,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        int randomPuzzle = Random.Range(1, 2);
-
-        if (isPuzzleRigged)
-        {
-            randomPuzzle = riggedPuzzle;
-        }
+        int randomPuzzle = FrontEnd.Instance.randomPuzzle;
 
         if (puzzleLocation != null)
         {
